@@ -6,6 +6,7 @@ import (
 	"log"
 	"net/http"
 	"os"
+	"time"
 
 	"github.com/Just-LuisD/rss-aggregator/internal/database"
 	"github.com/go-chi/chi"
@@ -41,6 +42,12 @@ func main(){
 	apiCfg := apiConfig{
 		DB: queries,
 	}
+
+	go startScraping(
+		queries,
+		10,
+		time.Minute,
+	)
 
 	router := chi.NewRouter()
 
